@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, viewport-fit=cover">
+    <title>Kobayashi Store - Loja de Mangás</title>
+    
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+   
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+
+    <style>
+        :root {
+            --bg-color: #0f0f12;
+            --card-bg: #18181c;
+            --primary-color: #ff3366;
+            --primary-hover: #e02855;
+            --secondary-color: #7000ff;
+            --text-color: #ffffff;
+            --text-muted: #a0a0aa;
+            --input-bg: #222228;
+            --border-color: #2e2e38;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+    
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background-color: rgba(24, 24, 28, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-btn.primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+    
+        .page {
+            display: none;
+            flex: 1;
+            padding: 1.5rem 1rem;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+     
+        .hero {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .hero-content {
+            max-width: 500px;
+        }
+
+        .tag {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 1.2rem;
+        }
+
+        .btn-hero {
+            background: white;
+            color: black;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .hero-badge {
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: #ffcc00;
+            color: black;
+            font-weight: 800;
+            padding: 0.3rem 2.5rem;
+            transform: rotate(45deg);
+            font-size: 0.75rem;
+        }
+
+
+        .categories h2, .catalog h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .cat-card {
+            height: 70px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .cat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .cat-card span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .shonen { background-image: url('https://pixelnerd.com.br/wp-content/uploads/2023/05/9-melhores-animes-para-assistir-antes-de-morrer-970x545.jpg'); }
+        .seinen { background-image: url('https://recreio.com.br/wp-content/uploads/2025/12/Psycho-Pass-2012.jpg'); }
+        .shojo { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyMxtZkAniCeC10w4Px2whjwo5nZbz8lGoBbMw1bUKug&s=10'); }
+        .isekai { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzke5fYHbbga8RCiKcDq9OT_F8olMohyKLbL3qAGlxnTgRUjn7HJjZKmA&s=10'); }
+
+   
+        .manga-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .manga-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .manga-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .volume-badge {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.7);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .manga-info {
+            padding: 0.8rem;
+        }
+
+        .manga-info h3 {
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .author {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        .btn-cart {
+            background: var(--input-bg);
+            border: none;
+            color: white;
+            padding: 0.4rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+     
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 150px);
+        }
+
+        .auth-box {
+            background: var(--card-bg);
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border-color);
+        }
+
+        .auth-box h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .auth-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+        }
+
+        .input-field {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0 0.8rem;
+        }
+
+        .input-field i {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .input-field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 0.7rem;
+            color: white;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+        }
+
+        .forgot-link {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .btn {
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-block {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .divider {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 1.2rem 0;
+            position: relative;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .btn-social {
+            flex: 1;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+        }
+
+        .switch-auth {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .switch-auth a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar">
+        <div class="logo-container" onclick="showPage('home')">
+            <i class="fa-solid fa-book-open logo-icon"></i>
+            <span class="logo-text">Kobayashi<span class="highlight">Store</span></span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" onclick="showPage('home')" id="btn-home">
+                <i class="fa-solid fa-house"></i> Home
+            </button>
+            <button class="nav-btn" onclick="showPage('login')" id="btn-login">
+                <i class="fa-solid fa-right-to-bracket"></i> Login
+            </button>
+            <button class="nav-btn primary" onclick="showPage('register')" id="btn-register">
+                <i class="fa-solid fa-user-plus"></i> Cadastro
+            </button>
+        </div>
+    </nav>
+
+
+    <main id="page-home" class="page active">
+  
+        <section class="hero">
+            <div class="hero-content">
+                <span class="tag">Lançamento Exclusivo</span>
+                <h1>Chainsaw Man Vol. 13</h1>
+                <p>Garanta já o seu exemplar com frete grátis e marcador de página exclusivo na pré-venda!</p>
+                <div class="hero-actions">
+                    <button class="btn btn-hero" onclick="alert('Produto comprado.')">Comprar Agora R$ 34,90</button>
+                </div>
+            </div>
+            <div class="hero-badge">
+                <span>15% OFF</span>
+            </div>
+        </section>
+
+        
+        <section class="categories">
+            <h2>Categorias em Destaque</h2>
+            <div class="category-grid">
+                <div class="cat-card shonen"><span>Shonen</span></div>
+                <div class="cat-card seinen"><span>Seinen</span></div>
+                <div class="cat-card shojo"><span>Shojo</span></div>
+                <div class="cat-card isekai"><span>Isekai</span></div>
+            </div>
+        </section>
+
+      
+        <section class="catalog">
+            <h2>Mais Vendidos da Semana</h2>
+            <div class="manga-grid">
+     
+                <div class="manga-card">
+                    <div class="manga-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRax9VBxAN_tvQkHUHMacgQWCDfTnJM1DsXFZAWyO_GbA&s=10');">
+                        <span class="volume-badge">Vol. 01</span>
+                    </div>
+                    <div class="manga-info">
+                        <h3>Jujutsu Kaisen</h3>
+                        <p class="author">Gege Akutami</p>
+                        <div class="price-row">
+                            <span class="price">R$ 32,90</span>
+                            <button class="btn-cart" onclick="alert('Seu item está no carrinho.')"><i class="fa-solid fa-cart-shopping"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="manga-card">
+                    <div class="manga-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRFVpR5IdugezPIlAN-FbXCv0VXpz2epzagvR-bnyqcA&s=10');">
+                        <span class="volume-badge">Vol. 34</span>
+                    </div>
+                    <div class="manga-info">
+                        <h3>Attack on Titan</h3>
+                        <p class="author">Hajime Isayama</p>
+                        <div class="price-row">
+                            <span class="price">R$ 29,90</span>
+                            <button class="btn-cart" onclick="alert('Seu item esta no carrinho.')"><i class="fa-solid fa-cart-shopping"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+          
+                <div class="manga-card">
+                    <div class="manga-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNSSAuQSDQoG4LHt0wLp69WgAbugjDbRQhgDUI45CKiA&s=10');">
+                        <span class="volume-badge">Vol. 05</span>
+                    </div>
+                    <div class="manga-info">
+                        <h3>Demon Slayer</h3>
+                        <p class="author">Koyoharu Gotouge</p>
+                        <div class="price-row">
+                            <span class="price">R$ 31,00</span>
+                            <button class="btn-cart" onclick="alert('Simulação: Apenas visual.')"><i class="fa-solid fa-cart-shopping"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+           
+                <div class="manga-card">
+                    <div class="manga-img" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPW0saMznbsAdMZaN25VlAxOEtaoSLuYTTZNl2IgHrQA&s=10');">
+                        <span class="volume-badge">Vol. 10</span>
+                    </div>
+                    <div class="manga-info">
+                        <h3>Spy x Family</h3>
+                        <p class="author">Tatsuya Endo</p>
+                        <div class="price-row">
+                            <span class="price">R$ 35,90</span>
+                            <button class="btn-cart" onclick="alert('Seu item está no carrinho.')"><i class="fa-solid fa-cart-shopping"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   
+    <main id="page-login" class="page">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2>Acesse sua conta</h2>
+                <p class="auth-subtitle">Bem-vindo de volta à Kobayashi Store!</p>
+                
+                <form onsubmit="event.preventDefault(); alert('Login feito com sucesso!');">
+                    <div class="input-group">
+                        <label for="login-email">E-mail</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="login-email" placeholder="seu@email.com">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-password">Senha</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="••••••••">
+                        </div>
+                    </div>
+
+                    <div class="auth-options">
+                        <label class="remember-me">
+                            <input type="checkbox"> Lembrar-me
+                        </label>
+                        <a href="#" class="forgot-link" onclick="event.preventDefault(); alert('Indisponível');">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">Entrar</button>
+                </form>
+
+                <div class="divider">ou entre com</div>
+
+                <div class="social-login">
+                    <button class="btn-social" onclick="alert('Simulação social')"><i class="fa-brands fa-google"></i> Google</button>
+                    <button class="btn-social" onclick="alert('Simulação social')"><i class="fa-brands fa-discord"></i> Discord</button>
+                </div>
+
+                <p class="switch-auth">
+                    Ainda não tem conta? <a href="#" onclick="showPage('register')">Cadastre-se</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    
+    <main id="page-register" class="page">
+        <div class="auth-container">
+            <div class="auth-box">
+                <h2>Crie sua conta</h2>
+                <p class="auth-subtitle">Junte-se à nossa comunidade de leitores!</p>
+                
+                <form onsubmit="event.preventDefault(); alert('Modo não funcional: Cadastro simulado com sucesso!');">
+                    <div class="input-group">
+                        <label for="reg-name">Nome Completo</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" id="reg-name" placeholder="Seu Nome">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-email">E-mail</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="reg-email" placeholder="seu@email.com">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-password">Senha</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="reg-password" placeholder="Mínimo 8 caracteres">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="reg-confirm">Confirmar Senha</label>
+                        <div class="input-field">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <input type="password" id="reg-confirm" placeholder="Repita sua senha">
+                        </div>
+                    </div>
+
+                    <div class="auth-options">
+                        <label class="remember-me">
+                            <input type="checkbox" required> Aceito os Termos de Uso
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-block">Criar Conta</button>
+                </form>
+
+                <p class="switch-auth">
+                    Já possui conta? <a href="#" onclick="showPage('login')">Faça Login</a>
+                </p>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        function showPage(pageId) {
+            
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+           
+            const navButtons = document.querySelectorAll('.nav-btn');
+            navButtons.forEach(btn => btn.classList.remove('active'));
+
+          
+            const selectedPage = document.getElementById(`page-${pageId}`);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            const activeNavBtn = document.getElementById(`btn-${pageId}`);
+            if (activeNavBtn) {
+                activeNavBtn.classList.add('active');
+            }
+
+
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
